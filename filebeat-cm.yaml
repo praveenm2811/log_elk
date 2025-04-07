@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-config
+data:
+  filebeat.yml: |
+    filebeat.inputs:
+      - type: log
+        paths:
+          - /var/log/containers/*.log
+        multiline.pattern: '^\['
+        multiline.negate: true
+        multiline.match: after
+
+    output.logstash:
+      hosts: ['logstash:5044']  # Logstash service hostname
+      index: "kubernetes-logs-%{+YYYY.MM.dd}"
+
+    logging:
+      level: info

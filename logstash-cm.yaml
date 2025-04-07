@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+data:
+  logstash.yml: |
+    # The Logstash config file, logstash.yml
+    # Example configuration:
+    http.host: "0.0.0.0"
+    xpack.monitoring.enabled: false
+    # Other Logstash configurations as necessary
+
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+    }
+
+    output {
+      elasticsearch {
+        hosts => ["${ELASTICSEARCH_HOST}"]
+        index => "logstash-%{+YYYY.MM.dd}"
+      }
+    }
