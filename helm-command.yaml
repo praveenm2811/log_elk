@@ -1,0 +1,9 @@
+#Add the Elasticsearch Helm chart repository
+helm repo add elastic https://helm.elastic.co
+helm repo update
+
+#Install Elasticsearch using Helm
+helm install elasticsearch elastic/elasticsearch
+
+#Install Kibana
+helm install kibana elastic/kibana
